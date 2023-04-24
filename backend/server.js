@@ -4,11 +4,11 @@ const { append } = require('express/lib/response')
 const { chats } = require('./data/data')
 const connectDB = require('./config/db')
 const colors = require('colors')
+const cors = require('cors')
 
 dotenv.config()
 connectDB()
 const app = express()
-connectDB()
 
 app.get('/', (req, res) => {
   res.send('API is Runnig Sucessfully')
