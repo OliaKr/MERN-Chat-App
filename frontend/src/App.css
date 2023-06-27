@@ -1,10 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap");
 
 .App {
   min-height: 100vh;
   display: flex;
-  background-image: url('./background.png');
-  background-size: cover;
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/olia-krasilnikov.appspot.com/o/videos%2Fbackground.mp4?alt=media&token=796b8c82-cfaf-497e-8195-dc06ded1d519");
   background-position: center;
-  color: black;
+  background-size: cover;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0.281);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.App video {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 480px) {
+  .App {
+    flex-direction: column;
+    background-position: bottom;
+    background-size: cover;
+  }
+  .App video {
+    position: static;
+    top: unset;
+    object-fit: contain;
+    bottom: 0;
+    z-index: 1000;
+  }
 }
