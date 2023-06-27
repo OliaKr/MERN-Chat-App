@@ -15,6 +15,6 @@ Testing API Requests- Postman
 
 Deployed app - https://oliakrasilnikov-instagram.web.app/instagram
 
-![alt text](https://github.com/OliaKr/MERN-Chat-App/tree/main/frontend/src/assets/picmobilechat.jpg)
-![alt text](https://github.com/OliaKr/MERN-Chat-App/tree/main/frontend/src/assets/picmobilelogin.jpg)
-![alt text](https://github.com/OliaKr/MERN-Chat-App/tree/main/frontend/src/assets/picweblogin.jpg)
+![alt text](https://github.com/OliaKr/MERN-Chat-App/blob/main/frontend/src/assets/picmobilechat.JPG?raw=true)
+![alt text](https://github.com/OliaKr/MERN-Chat-App/blob/main/frontend/src/assets/picmobilelogin.JPG?raw=true)
+![alt text](https://github.com/OliaKr/MERN-Chat-App/blob/main/frontend/src/assets/picweblogin.JPG?raw=true)
