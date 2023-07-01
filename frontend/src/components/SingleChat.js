@@ -50,7 +50,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         },
         withCredentials: true, // Add this option
       };
-      git;
+
       setLoading(true);
 
       const { data } = await axios.get(
