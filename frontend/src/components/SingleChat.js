@@ -48,8 +48,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
+        withCredentials: true, // Add this option
       };
-
+      git;
       setLoading(true);
 
       const { data } = await axios.get(
