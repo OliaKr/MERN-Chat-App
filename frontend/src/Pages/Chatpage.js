@@ -17,7 +17,7 @@ const Chatpage = () => {
         p="10px"
         direction={{ base: "column", md: "row" }}
       >
-        {user && <MyChats fetchAgain={fetchAgain} />}
+        {/* {user && <MyChats fetchAgain={fetchAgain} />} */}
         {user && (
           <Chatbox
             fetchAgain={fetchAgain}
