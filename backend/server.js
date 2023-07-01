@@ -21,19 +21,19 @@ app.use("/api/message", messageRoutes);
 
 // --------------------------deployment------------------------------
 
-const __dirname1 = path.resolve();
+// const __dirname1 = path.resolve();
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname1, "/frontend/build")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname1, "/frontend/build")));
 
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"))
-  );
-} else {
-  app.get("/", (req, res) => {
-    res.send("API is running..");
-  });
-}
+//   app.get("*", (req, res) =>
+//     res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"))
+//   );
+// } else {
+//   app.get("/", (req, res) => {
+//     res.send("API is running..");
+//   });
+// }
 
 // --------------------------deployment------------------------------
 
@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
 
     chat.users.forEach((user) => {
       if (user == newMessageRecieved.sender._id) return;
-      console.log('currentUser', user, newMessageRecieved.sender._id)
+      console.log("currentUser", user, newMessageRecieved.sender._id);
       socket.in(user).emit("message recieved", newMessageRecieved);
     });
   });
