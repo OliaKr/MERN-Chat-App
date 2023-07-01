@@ -36,6 +36,7 @@ const Login = () => {
         headers: {
           "Content-type": "application/json",
         },
+        withCredentials: true, // Add this option
       };
 
       const { data } = await axios.post(

@@ -22,6 +22,7 @@ const MyChats = ({ fetchAgain }) => {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
+        withCredentials: true, // Add this option
       };
 
       const { data } = await axios.get("/api/chat", config);
