@@ -13,7 +13,7 @@ connectDB();
 const app = express();
 
 // Enable CORS for all routes
-// app.use(cors());
+// c
 
 // CORS options for specific routes
 app.use((req, res, next) => {
