@@ -11,6 +11,11 @@ const cors = require("cors");
 dotenv.config();
 connectDB();
 const app = express();
+
+// Enable CORS for all routes
+app.use(cors());
+
+// CORS options for specific routes
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "https://olia-chat-app.web.app");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
@@ -19,7 +24,6 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
-app.use(cors()); // Enable CORS for all routes
 
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
@@ -43,11 +47,7 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin:
-      //  "http://localhost:3000",
-      "https://olia-chat-app.web.app",
-
-    // credentials: true,
+    origin: "https://olia-chat-app.web.app",
   },
 });
 
