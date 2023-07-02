@@ -48,7 +48,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
-        withCredentials: true, // Add this option
+        // withCredentials: true, // Add this option
       };
 
       setLoading(true);
