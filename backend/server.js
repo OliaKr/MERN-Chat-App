@@ -15,14 +15,6 @@ const app = express();
 // Enable CORS for all routes
 app.use(cors());
 
-// CORS options for specific routes
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://olia-chat-app.web.app");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
-
 app.use(express.json());
 
 app.use("/api/user", userRoutes);
@@ -48,13 +40,15 @@ const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
     origin: "https://olia-chat-app.web.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   },
 });
 
 io.on("connection", (socket) => {
   console.log("Connected to socket.io");
   socket.on("setup", (userData) => {
-    socket.join(userData._id);
+    socket.join(userData?._id);
     socket.emit("connected");
   });
 
@@ -70,14 +64,14 @@ io.on("connection", (socket) => {
     if (!chat.users) return console.log("chat.users not defined");
 
     chat.users.forEach((user) => {
-      if (user == newMessageRecieved.sender._id) return;
-      console.log("currentUser", user, newMessageRecieved.sender._id);
+      if (user == newMessageRecieved.sender?._id) return;
+      console.log("currentUser", user, newMessageRecieved.sender?._id);
       socket.in(user).emit("message recieved", newMessageRecieved);
     });
   });
 
   socket.off("setup", () => {
     console.log("USER DISCONNECTED");
-    socket.leave(userData._id);
+    socket.leave(userData?._id);
   });
 });

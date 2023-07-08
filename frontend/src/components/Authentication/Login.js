@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
-import { VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/layout";
 import { useState } from "react";
 import axios from "../../axios";
 import { useToast } from "@chakra-ui/react";
@@ -36,7 +36,6 @@ const Login = () => {
         headers: {
           "Content-type": "application/json",
         },
-        // withCredentials: true, // Add this option
       };
 
       const { data } = await axios.post(
@@ -70,10 +69,7 @@ const Login = () => {
 
   return (
     <VStack spacing="10px">
-      <FormControl
-        id="email"
-        isRequired
-      >
+      <FormControl id="email" isRequired>
         <FormLabel>Email Address</FormLabel>
         <Input
           value={email}
@@ -82,10 +78,7 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
       </FormControl>
-      <FormControl
-        id="password"
-        isRequired
-      >
+      <FormControl id="password" isRequired>
         <FormLabel>Password</FormLabel>
         <InputGroup size="md">
           <Input
@@ -95,11 +88,7 @@ const Login = () => {
             placeholder="Enter password"
           />
           <InputRightElement width="4.5rem">
-            <Button
-              h="1.75rem"
-              size="sm"
-              onClick={handleClick}
-            >
+            <Button h="1.75rem" size="sm" onClick={handleClick}>
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>

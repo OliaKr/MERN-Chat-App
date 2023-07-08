@@ -1,6 +1,6 @@
 import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/layout";
 import "./styles.css";
 import { IconButton, Spinner, useToast } from "@chakra-ui/react";
 import { getSender, getSenderFull } from "../config/ChatLogics";
@@ -15,9 +15,8 @@ import animationData from "../animations/typing.json";
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
-const ENDPOINT = "https://chat-app-server-6juk.onrender.com";
+const ENDPOINT = "https://chat-app-server-6juk.onrender.com"
 
-// "http://localhost:5000";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -28,6 +27,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
   const toast = useToast();
+
 
   const defaultOptions = {
     loop: true,
@@ -48,19 +48,18 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
-        // withCredentials: true, // Add this option
       };
 
       setLoading(true);
 
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `/api/message/${selectedChat?._id}`,
         config
       );
       setMessages(data);
       setLoading(false);
 
-      socket.emit("join chat", selectedChat._id);
+      socket.emit("join chat", selectedChat?._id);
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -75,7 +74,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
-      socket.emit("stop typing", selectedChat._id);
+      socket.emit("stop typing", selectedChat?._id);
       try {
         const config = {
           headers: {
@@ -87,6 +86,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         const { data } = await axios.post(
           "/api/message",
           {
+            user: user,
             content: newMessage,
             chatId: selectedChat,
           },
@@ -128,7 +128,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.on("message recieved", (newMessageRecieved) => {
       if (
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
-        selectedChatCompare._id !== newMessageRecieved.chat._id
+        selectedChatCompare?._id !== newMessageRecieved.chat?._id
       ) {
         if (!notification.includes(newMessageRecieved)) {
           setNotification([newMessageRecieved, ...notification]);
@@ -148,7 +148,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     if (!typing) {
       setTyping(true);
-      socket.emit("typing", selectedChat._id);
+      socket.emit("typing", selectedChat?._id);
     }
     let lastTypingTime = new Date().getTime();
     var timerLength = 3000;
@@ -156,7 +156,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       var timeNow = new Date().getTime();
       var timeDiff = timeNow - lastTypingTime;
       if (timeDiff >= timerLength && typing) {
-        socket.emit("stop typing", selectedChat._id);
+        socket.emit("stop typing", selectedChat?._id);
         setTyping(false);
       }
     }, timerLength);
@@ -207,25 +207,18 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             p={3}
             bg="#E8E8E8"
             w="100%"
-            // h="100%"
+            h="100%"
             borderRadius="lg"
             overflowY="hidden"
           >
             {loading ? (
-              <Flex
-                justify="center"
-                w="100%"
-                py="20px"
-              >
-                <Spinner
-                  thickness="4px"
-                  speed="0.60s"
-                  emptyColor="gray.200"
-                  color="blue.500"
-                  size="xl"
-                  variant="solid"
-                />
-              </Flex>
+              <Spinner
+                size="xl"
+                w={20}
+                h={20}
+                alignSelf="center"
+                margin="auto"
+              />
             ) : (
               <div className="messages">
                 <ScrollableChat messages={messages} />
@@ -242,6 +235,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <div>
                   <Lottie
                     options={defaultOptions}
+                    // height={50}
                     width={70}
                     style={{ marginBottom: 15, marginLeft: 0 }}
                   />
@@ -261,18 +255,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         </>
       ) : (
         // to get socket.io on same page
-        <Box
-          d="flex"
-          alignItems="center"
-          justifyContent="center"
-          h="100%"
-        >
-          <Text
-            fontSize="3xl"
-            pb={3}
-            fontFamily="Work sans"
-          >
-            Click on a group to start chatting
+        <Box d="flex" alignItems="center" justifyContent="center" h="100%">
+          <Text fontSize="3xl" pb={3} fontFamily="Work sans">
+            Click on a user to start chatting
           </Text>
         </Box>
       )}

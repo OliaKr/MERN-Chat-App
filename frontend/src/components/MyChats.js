@@ -1,5 +1,5 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Stack, Text } from "@chakra-ui/react";
+import { Box, Stack, Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "../axios";
 import { useEffect, useState } from "react";
@@ -20,13 +20,14 @@ const MyChats = ({ fetchAgain }) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
         },
-        // withCredentials: true, // Add this option
       };
-
-      const { data } = await axios.get("/api/chat", config);
-      setChats(data);
+      if (user?._id) {
+        const { data } = await axios.post("/api/chat/fetchChats", user, config);
+        console.log(data)
+        setChats(data);
+      }
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -52,10 +53,9 @@ const MyChats = ({ fetchAgain }) => {
       alignItems="center"
       p={3}
       bg="white"
-      w="100%"
+      w={{ base: "100%", md: "31%" }}
       borderRadius="lg"
       borderWidth="1px"
-      h="fit-content"
     >
       <Box
         pb={3}
@@ -84,12 +84,13 @@ const MyChats = ({ fetchAgain }) => {
         p={3}
         bg="#F8F8F8"
         w="100%"
+        h="100%"
         borderRadius="lg"
         overflowY="hidden"
       >
         {chats ? (
           <Stack overflowY="scroll">
-            {chats?.map((chat) => (
+            {chats.map((chat) => (
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"

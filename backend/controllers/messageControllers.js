@@ -22,34 +22,30 @@ const allMessages = asyncHandler(async (req, res) => {
 //@route           POST /api/Message/
 //@access          Protected
 const sendMessage = asyncHandler(async (req, res) => {
-  const { content, chatId } = req.body;
+  const { content, chatId, user } = req.body;
 
   if (!content || !chatId) {
     console.log("Invalid data passed into request");
     return res.sendStatus(400);
   }
 
-  const newMessage = {
-    sender: req.user._id,
+  var newMessage = {
+    sender: user?._id,
     content: content,
     chat: chatId,
   };
 
   try {
-    let message = await Message.create(newMessage);
+    var message = await Message.create(newMessage);
 
-    // Fetch the sender information separately
-    const sender = await User.findById(message.sender, "name pic");
+    message = await message.populate("sender", "name pic").execPopulate();
+    message = await message.populate("chat").execPopulate();
+    message = await User.populate(message, {
+      path: "chat.users",
+      select: "name pic email",
+    });
 
-    // Fetch the chat information separately
-    const chat = await Chat.findById(message.chat);
-
-    // Assign the fetched sender and chat to the message object
-    message.sender = sender;
-    message.chat = chat;
-
-    // Update the latestMessage field in the chat
-    await Chat.findByIdAndUpdate(chatId, { latestMessage: message });
+    await Chat.findByIdAndUpdate(req.body.chatId, { latestMessage: message });
 
     res.json(message);
   } catch (error) {

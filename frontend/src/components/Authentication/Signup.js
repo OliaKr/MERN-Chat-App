@@ -1,13 +1,8 @@
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  InputRightElement,
-  VStack,
-  useToast,
-} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/button";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
+import { VStack } from "@chakra-ui/layout";
+import { useToast } from "@chakra-ui/toast";
 import axios from "../../axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -103,12 +98,12 @@ const Signup = () => {
     }
     console.log(pics);
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
-      const data = new FormData();
-      data.append("file", pics);
-      data.append("upload_preset", "chat-app");
-      data.append("cloud_name", "dsinv9pik");
-      fetch("https://api.cloudinary.com/v1_1/dsinv9pik/image/upload", {
-        method: "POST",
+      const data = new FormData()
+      data.append('file', pics)
+      data.append('upload_preset', 'chat-app')
+      data.append('cloud_name', 'dsinv9pik')
+      fetch('https://api.cloudinary.com/v1_1/dsinv9pik/image/upload', {
+        method: 'POST',
         body: data,
       })
         .then((res) => res.json())
@@ -136,20 +131,14 @@ const Signup = () => {
 
   return (
     <VStack spacing="5px">
-      <FormControl
-        id="first-name"
-        isRequired
-      >
+      <FormControl id="first-name" isRequired>
         <FormLabel>Name</FormLabel>
         <Input
           placeholder="Enter Your Name"
           onChange={(e) => setName(e.target.value)}
         />
       </FormControl>
-      <FormControl
-        id="email"
-        isRequired
-      >
+      <FormControl id="email" isRequired>
         <FormLabel>Email Address</FormLabel>
         <Input
           type="email"
@@ -157,10 +146,7 @@ const Signup = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
       </FormControl>
-      <FormControl
-        id="password"
-        isRequired
-      >
+      <FormControl id="password" isRequired>
         <FormLabel>Password</FormLabel>
         <InputGroup size="md">
           <Input
@@ -169,20 +155,13 @@ const Signup = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <InputRightElement width="4.5rem">
-            <Button
-              h="1.75rem"
-              size="sm"
-              onClick={handleClick}
-            >
+            <Button h="1.75rem" size="sm" onClick={handleClick}>
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      <FormControl
-        id="password"
-        isRequired
-      >
+      <FormControl id="password" isRequired>
         <FormLabel>Confirm Password</FormLabel>
         <InputGroup size="md">
           <Input
@@ -191,11 +170,7 @@ const Signup = () => {
             onChange={(e) => setConfirmpassword(e.target.value)}
           />
           <InputRightElement width="4.5rem">
-            <Button
-              h="1.75rem"
-              size="sm"
-              onClick={handleClick}
-            >
+            <Button h="1.75rem" size="sm" onClick={handleClick}>
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
