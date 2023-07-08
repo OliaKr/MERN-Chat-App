@@ -12,6 +12,7 @@ Backend- Node.js
 Server- Express.js
 Crypt users password- bcrypt
 Testing API Requests- Postman
+Context API - State management
 
 Deployed app - https://oliakrasilnikov-instagram.web.app/instagram
 
